@@ -7,21 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><h1>Library</h1></li>
+        <li> <button> Log in </button></li>
+      </ul>
+    </nav>
+  </header>
+
+
+
     <section>
    
-      <input id="title" type="text" placeholder="enter title">
-      <input id="author" type="text" placeholder="enter author">
-      <input id="pages" type="number" placeholder="enter number of pages">
-      <input id="sub" type="submit" value="Submit">
     
-    
-      
+
+      <button id="addBtn" class="btn">+ Add a book</button>
+     
 
     </section>
 
-    <h1 id="titleList"></h1>
-    <h1 id="authorList"></h1>
-    <h1 id="pageNum"></h1>
+
+    <div id="formOverlay">
+
+      <div id="formContainer">
+        <form id="myForm">
+          
+          <input id="title" type="text" placeholder="enter title">
+          <input id="author" type="text" placeholder="enter author">
+          <input id="pages" type="number" placeholder="enter number of pages">
+          
+          <input id="sub" type="submit" value="Submit">
+
+        </form>
+      </div>
+      
+    </div>
+    
+
+
+    <section>
+    <div id ='container' class="container"></div>
+    </section>
+
+   
     
     <script src="script.js"></script>
 </body>

@@ -41,9 +41,10 @@ form {
         display: flex;
         flex-direction: column;
         flex: 1;
-        margin: 0 100px;
+        
       justify-content: center;
-         
+      border: solid green 2px;
+      
 }
 
 
@@ -54,9 +55,9 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin: 0 100px;
+  
     justify-content: center;
-   
+   border: solid red 2px;
 }
 .group3{
     flex:1;
