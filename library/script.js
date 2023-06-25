@@ -1,7 +1,10 @@
 
-const container = document.getElementById("container");
 let submitButton = document.getElementById('sub');  // variable connecting to HTML submit button
 let myLibrary = [];   // array of objects
+
+// let input1 = document.getElementById('title');
+// let input2 = document.getElementById('author');
+// let input3 = document.getElementById('pages');
 
 function Book(title,author,pages) {
   this.title = title;
@@ -15,10 +18,10 @@ submitButton.addEventListener('click', function() {
   event.preventDefault();
   addBookToLibrary();
   createBox(book);
+  
 });
 
 //adds an event listener to the submit button and when clicked it runs the following functions
-
 
 
 function addBookToLibrary() {
@@ -44,7 +47,12 @@ function addBookToLibrary() {
   
 }
 
-// Function to create a new div box
+// Function to create a new div box inside container
+
+
+const container = document.getElementById("container");
+
+
 function createBox(book) {
 
   // Create a new div element
@@ -53,7 +61,42 @@ function createBox(book) {
   const header = document.createElement("h1");
   const header2 = document.createElement("h1");
   const header3 = document.createElement("h1");
+
+  const readBtn = document.createElement('button');
+  const removeBtn = document.createElement('button');
+
   
+  removeBtn.className= 'btn';
+  removeBtn.textContent= 'Remove';
+
+  let checkbox = document.getElementById('myCheckBox')
+
+  var readBtnText = checkbox.checked ? "Read" :"Not Read";
+  readBtn.textContent= readBtnText;
+
+  readBtn.classList.add(checkbox.checked ? 'readBtn' : 'noRead');
+
+  
+
+ 
+
+  readBtn.addEventListener('click', function() {
+
+    if (readBtn.textContent === "Read") {
+      readBtn.textContent = "Not Read";
+      readBtn.classList.remove('readBtn');
+      readBtn.classList.add('noRead');
+    } else {
+      readBtn.textContent = "Read";
+      readBtn.classList.add('readBtn');
+      readBtn.classList.remove('noRead');
+    }
+  })
+
+  removeBtn.addEventListener('click', function(){
+    container.removeChild(box);
+  })
+
   // Set the class and content of the box
   box.className = "box";
 
@@ -65,19 +108,26 @@ function createBox(book) {
   box.appendChild(header);
   box.appendChild(header2);
   box.appendChild(header3);
+
+  box.appendChild(readBtn);
+  box.appendChild(removeBtn);
+
   container.appendChild(box);
 
+
+
   formOverlay.classList.remove('active');
+
+  document.getElementById('title').value = '';
+  document.getElementById('author').value = '';
+  document.getElementById('pages').value = '';
 
 }
 
 
-// const openFormButton = document.getElementById('openFormButton');
+
 
 const openFormButton = document.getElementById('addBtn');
-
-
-
 
 const formOverlay = document.getElementById('formOverlay');
 
@@ -91,3 +141,16 @@ formOverlay.addEventListener('click', function(event) {
   }
 });
 
+// let checkbox = document.getElementById('myCheckBox')
+
+// checkbox.addEventListener('change', check);
+
+// function check(){
+
+//   if (checkbox.checked) {
+//     readBtn.textContent = "Read";
+//   } else {
+//     readBtn.textContent = "Not Read";
+
+//   }
+// }

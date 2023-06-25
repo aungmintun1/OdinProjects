@@ -1,4 +1,8 @@
-
+html{
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
 
 section{
     display: flex;
@@ -43,13 +47,16 @@ nav{
 }
 
 input{
-    width: 250px;
+    width: 235px;
+    height: 35px;
+    border-radius: 10px;
+
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
-    width:100%;
+    width:90%;
   }
   
   .box {
@@ -60,9 +67,47 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    border-radius: 20px;
     
     flex-direction: column;
   }
+
+  .readBtn{
+    background-color: lightgreen;
+   border-radius: 10px;
+    font-size: 24px;
+    width: 175px;
+    height: 50px;
+
+    transition: 0.3s ease-in-out;
+
+  }
+
+  .noRead{
+    background-color: lightcoral;
+    border-radius: 10px;
+     font-size: 24px;
+     width: 175px;
+     height: 50px;
+ 
+     transition: 0.3s ease-in-out;
+  }
+
+  .noRead:hover {
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: lightgray;
+    filter: brightness(1.2);
+     }
+
+
+  .readBtn:hover {
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: lightgray;
+    filter: brightness(1.2);
+     }
 
   .btn{
     background: none;
@@ -75,7 +120,7 @@ input{
   .btn:hover {
     padding: 10px 20px;
     border-radius: 15px;
-    background-color: lightgray; /* Optional: Adding a background color on hover */
+    background-color: lightgray; 
     filter: brightness(1.2);
      }
   
@@ -92,13 +137,15 @@ input{
       }
       
       #formContainer {
+        width: 250px;
+        height: 300px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: white;
         padding: 20px;
-        border: 1px solid #ccc;
+        border-radius: 15px;
       }
       
       #formOverlay.active {
@@ -107,7 +154,30 @@ input{
         justify-content: center;
       }
       
+    #formContainer > h2{
+       text-align: center;
+        
+      }
+
+
       form{
         display: flex;
         flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .check{
+        display: flex;
+      
+        gap: 25px;
+      }
+
+      #myCheckBox{
+
+        width: 20px;
+        height: 20px;
+        
+        accent-color: green;
       }
