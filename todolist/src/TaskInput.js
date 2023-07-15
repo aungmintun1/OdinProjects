@@ -7,8 +7,6 @@ export default function TaskInput({userInput, newTask, addTask, todo}) {
         <input onChange={userInput}></input>
         <button onClick={addTask}>Add New Task</button>
         
-       
-
     </div>
   )
 }

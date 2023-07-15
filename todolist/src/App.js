@@ -16,21 +16,26 @@ function App() {
  }
 
  const addTask = () =>{
-  setTodo([...todo, newTask]);
+
+  const task = {
+
+    id: todo.length === 0 ? 1 : todo[todo.length-1].id + 1,
+    taskName: newTask,
+    }
+
+  setTodo([...todo, task]);
  }
 
+ const deleteTask = (id) => {
+
+  setTodo(todo.filter((task) => task.id !== id ))
+
+ }
   return (
     <div className="App">
 
       <TaskInput userInput={userInput} newTask={newTask} addTask={addTask} todo={todo}/>
-      <List todo={todo}/> 
-   
-
-
-
-    
-
-    
+      <List todo={todo} deleteTask={deleteTask} /> 
     </div>
   );
 }

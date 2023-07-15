@@ -1,14 +1,21 @@
 import React from 'react'
 
-export default function List({todo}) {
+export default function List({todo, deleteTask}) {
   return (
     <div>
         
 
     {todo.map((task) => {
 
-    return <h1>{task}</h1>
+    return<div>
+     <h1>{task.taskName}</h1>
+     <button onClick={()=> deleteTask(task.id)}>X</button>
+     
+     </div>
+     
     })}
+    
+    
 
     </div>
   )
