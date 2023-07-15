@@ -1,26 +1,35 @@
 
 import './App.css';
-import Print from './Print';
+import TaskInput from './TaskInput';
+import List from './List';
+import { useState } from 'react';
+
 
 function App() {
 
-  const planets = [
-    { name: "Mars", isGasPlanet: false },
-    { name: "Earth", isGasPlanet: false },
-    { name: "Jupiter", isGasPlanet: true},
-    { name: "Venus", isGasPlanet: false },
-    { name: "Neptune", isGasPlanet: true },
-    { name: "Uranus", isGasPlanet: true },
-    ];
+ const [todo, setTodo] = useState([]);
+ const [newTask, setNewTask] = useState("");
+
+ const userInput = (event) => {
+
+  setNewTask(event.target.value);
+ }
+
+ const addTask = () =>{
+  setTodo([...todo, newTask]);
+ }
 
   return (
     <div className="App">
 
-        {planets.map((planet) => planet.isGasPlanet && 
-        (
-        <Print PlanetName={planet.name}/>
-      ))}
-     
+      <TaskInput userInput={userInput} newTask={newTask} addTask={addTask} todo={todo}/>
+      <List todo={todo}/> 
+   
+
+
+
+    
+
     
     </div>
   );
