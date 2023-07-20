@@ -1,8 +1,5 @@
 let APIKEY = "1fWJNOTY6cuEfqkg4RgNMHDLhuwevds7";
 
-document.addEventListener("DOMContentLoaded", init);
-function init() {
-
   document.getElementById("btnSearch").addEventListener("click", ev => {
     ev.preventDefault(); //to stop the page reload
 
@@ -32,7 +29,7 @@ function init() {
         //after creating and assigning the values of our HTML tags, we append these tags to our container div
         
         let out = document.querySelector(".out");
-        //out is the section where we place the gif containers
+        //out is the div, where we place the gif containers
 
         out.insertAdjacentElement("afterbegin", fig);
         /*this is going to insert the fig containers into the out section in our html
@@ -48,4 +45,3 @@ function init() {
         console.error(err);
       });
   });
-}
