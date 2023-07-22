@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default function TaskInput({userInput, newTask, addTask, todo}) {
+export default function TaskInput({userInput,addTask,}) {
   return (
     <div>
         <input onChange={userInput}></input>
