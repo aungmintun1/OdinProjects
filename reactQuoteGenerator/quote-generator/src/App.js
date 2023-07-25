@@ -2,85 +2,23 @@ import React from 'react';
 import './App.css';
 import Axios from "axios";
 import { useState, useEffect } from 'react';
+import CatFact from './CatFact';
+import AgeGuess from './AgeGuess';
+import Gif from './Gif';
 
 function App() {
 
-const [quote, setQuote] = useState("");
 
-const generate= () => {
-
-Axios.get("https://catfact.ninja/fact").then((res) => {
-setQuote(res.data.fact);
-});
-}
-
-useEffect(()=>{
-generate();
-}, [])
-//automatically runs the function once the page is loaded
-//this is because we have nothing in the update cycle, if we didn't use a useEffect this would be in an infinite loop because it is always updating
-//This is how you should fetch data, but for now this is going to help us understand later on
-//note that react.strictmode fetches the data twice to make sure the code is working
-
-const [name, setName] = useState("");
-// this is the value of the input from the user typing the name 
-
-const [nameObj, setObj] = useState(null);
-// this is going to store the API data as an object
-
-const guess= () => {
-  Axios.get(`https://api.agify.io/?name=${name}`).then((res) => {
-setObj(res.data);
-});
-}
-// this gets the API data and stores it in the nameObj variable
-
-
-//this is the giphy API below
-
-const [gif, setGif] = useState(null);
-
-const createGif = (animal) => {
-
-  Axios.get(`https://api.giphy.com/v1/gifs/search?api_key=1fWJNOTY6cuEfqkg4RgNMHDLhuwevds7&limit=1&q=${animal}`).then((res) => {
-    setGif(res.data.data[0]);
-    // API syntax can be tricky, data is the JSON object, and then data is the actual array in the API data and we grab the first object in that array
-  });
-  
-
-}
 
   return (
     <div className='App'> 
-      <h1>random cat fact</h1>
-      <button onClick= {generate}> add name </button>
-      <h2>catfact: {quote} </h2>
+   
+   <CatFact />
+   <AgeGuess/>
+   <Gif/>
+ 
 
-      <h1>Age guesser</h1>
-
-      <input  type="text"
-       placeholder='Ex. Pedro'
-        onChange={(event) =>
-         setName(event.target.value)}/>
-
-      <button onClick={guess}> Guess age </button>
-
-      <h2>name: {nameObj?.name} </h2>
-      <h2>count: {nameObj?.count} </h2>
-      <h2>age: {nameObj?.age} </h2>
-
-      {/* note that we have an ? after the variable. 
-      This is because at first the variable is null and has no value at first.
-      we only display this data once it has value */}
-
-      <h1>Gif Generator</h1>
-
-      <button onClick={() => createGif("goat")}>goat</button>
-      <button onClick={() => createGif("cat")}>cat</button>
-      <button onClick={() => createGif("dog")}>dog</button>
-      <h2>name: {gif?.title} </h2>
-      <img src={gif?.images.downsized.url} alt="" />
-
+  
 
     </div>
   );
