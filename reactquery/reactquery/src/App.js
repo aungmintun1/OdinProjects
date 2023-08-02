@@ -17,3 +17,11 @@ function App() {
 }
 
 export default App;
+
+/* 
+1. import react query
+2. declare and intialize client variable to QueryClient(); the function
+3. wrap the QueryClientProvider tag around the components that requre the query function
+4. define client as client in QueryClientProvider
+5. go to components that are wrapped in the tag
+*/
