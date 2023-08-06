@@ -49,12 +49,65 @@ export default function Form() {
 
   )
 }
+/* 
+HOW TO MAKE A FORM
+
+1. make a component, use the form tag, and add your inputs, also define what data you want the user to input eg."name","data","title", etc
+
+2.IMPORT
+
+import {useForm} from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+
+3. Make your schema for validation
+
+const schema = yup.object().shape({
+
+})
+
+example:
+
+   const schema = yup.object().shape({
+        title: yup.string().required("a description is required!"), 
+        description:  yup.string().required("a description is required!"), 
+    })
+
+4.Add registers to inputs
+<input type="text" placeholder="Full Name..." {...register("fullName")} />
+
+5. declare the useForm hook
+
+  const {register, handleSubmit, formState: {errors} } = useForm({
+        resolver: yupResolver(schema),
+    });
+
+     const onSubmit = (data) => {
+      console.log(data);
+      };
+      //onSubmit() occurs when you press the submit button in the form. handleSubmit() takes it as a parameter
+
+    b. add the event listener
+    <form onSubmit={handleSubmit(onSubmit)}>
+
+6. define your errors: note that the message of the error is defined in the schema in .required("")
+
+example:
+<form onSubmit={handleSubmit(onSubmit)}>
+<input type="text" placeholder="Full Name..." {...register("fullName")} />
+<p>{errors.fullName?.message}</p>
+
+*/
+
 
 /*
+TUTORIAL VIDEO:
+
 2. Form.js: import useForm from 'react-hook-form'
 
 3.  const {register, handleSubmit } = useForm();
-    we call handleSubmit function whenever we click submit button. This handles returning the data from onSubmit.
+    we call handleSubmit function whenever we click submit button. This handles returning the data from onSubmit().
+
     onSubmit(); is the actual code that is activated whenever we click the submit button. It will passed as a parameter to handleSubmit();
 
     in Onsubmit(); "data" is the object that we get from the all the inputs once the user clicks submit.
@@ -76,6 +129,8 @@ HOW TO CREATE VALIDATION IN OUR FORMS
 1.import * as yup from 'yup'
 2. we create the variable "schema", this is going to be the outline of our validation.
     our data is going to look like a object()
+
+      const schema = yup.object().shape({})
 
     we then use the shape() function that accepts an object. We then declare what is required in those variables in the object. 
 
