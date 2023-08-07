@@ -6,6 +6,7 @@ import Contact from './pages/Contact';
 import Home from './pages/Home';
 import { Provider } from "react-redux";
 import { Store } from './pages/Store';
+import Counter from './pages/Counter';
 
 
 function App() {
@@ -22,12 +23,14 @@ function App() {
         <Link to="/"> Home</Link>
         <Link to="/about"> About</Link>
         <Link to="/contact"> Contact </Link>
+        <Link to="/counter"> Counter </Link>
       </div>
 
       <Routes>
         <Route path ="/" element ={<Home/> }/>
         <Route path ="/about" element ={<About /> }/>
         <Route path ="/contact" element ={<Contact /> }/>
+        <Route path= "/counter" element ={<Counter/> } />
       </Routes>
 </Router>
 </Provider>
