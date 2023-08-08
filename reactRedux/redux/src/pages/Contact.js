@@ -5,10 +5,11 @@ import { useDispatch, useSelector} from "react-redux";
 
 
 export default function Contact() {
+
     const[newUsername, setNewUsername] = useState("");
 
-    const dispatch = useDispatch();
-    const username = useSelector((state) => state.user.value.username);
+    const dispatch = useDispatch();     // dispatch hook used to grab functions from store.js
+    const username = useSelector((state) => state.user.value.username); // unique variable that is equal to the state value from the slice in store.js.
 
   return (
 
