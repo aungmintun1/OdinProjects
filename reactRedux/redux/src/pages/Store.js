@@ -1,27 +1,52 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"; 
 
-const initialState = {value: {username: ""} };
+const initialNum = {value: 0};
+const initialUser = {value: {username: ""} };
+
 
 const userSlice = createSlice({
 
-    name: "user",
-    initialState,
-    reducers: {
+    name: "user",                        // the name will be referenced in the reducers for store.js
+    initialState: initialUser,           // this is the initial value for our state which is an empty string ""
+    reducers: {                          // these reducers are going to change the value of our state
         login: (state, action) => {
             state.value = action.payload;
         },
 
         logout: (state) => {
-            state.value = initialState.value;
+            state.value = initialUser.value;
         },
 
     },
 })
 
+const numSlice = createSlice({
+    name:"counter",
+
+    initialState: initialNum,
+
+    reducers: {
+        add: (state) => {
+            state.value+= 1;
+        },
+
+        subtract: (state) => {
+            state.value-= 1;
+        },
+        zero: (state)=> {
+            state.value = initialNum.value;
+        }
+        
+    }
+})
+
 export const { login, logout } = userSlice.actions;
-export const Store = configureStore({
+export const { add, subtract, zero} = numSlice.actions;             //export the functions from the slice
+
+export const Store = configureStore({                               // export the store and add the slices to the reducers
     reducer: {
         user: userSlice.reducer,
+        counter: numSlice.reducer,
     },
 });
 
