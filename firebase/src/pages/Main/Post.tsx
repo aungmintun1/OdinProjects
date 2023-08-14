@@ -13,11 +13,24 @@ interface Like {
   likeId: string;
 }
 
+interface Comment{
+  userId: string;
+  likeId: string;
+  comment: string;
+}
+
 export default function Post(props: Props) {
 
     const {post} = props;
     const [user] = useAuthState(auth);
+
     const[likeAmount, setLikeAmount] = useState<Like[] | null >(null)
+    const[commentText, setCommentText] = useState<string | null>("");
+
+    const inputComment = (e : any) => {
+      setCommentText(e.target.value)
+
+    }
 
     const likesRef = collection(db, "likes");
 
@@ -34,6 +47,16 @@ export default function Post(props: Props) {
         console.log(err)
       }
       };
+
+      const likesDoc = query(likesRef, where("postId" , "==", post.id))
+
+      const getLikes = async () => {
+       const data = await getDocs(likesDoc)
+       setLikeAmount(data.docs.map((doc) =>({userId: doc.data().userId, likeId: doc.id})));
+       // retrieves all the docs that comply with the condition in likesDoc, and we then get the length of the docs that have that condition, and set state.
+      }
+  
+      const hasUserLiked = likeAmount?.find((like) => like.userId === user?.uid);
 
       const removeLike = async() => {
         try {
@@ -58,16 +81,25 @@ export default function Post(props: Props) {
         }
         };
 
+        const commentRef = collection(db, "comments");
+
+        const addComment = async () => {
+          try
+         { await addDoc(commentRef, {userId: user?.uid, postId: post.id, comment: commentText ,})
+
+          // adds a doc to our collection in "likes"
+          // if(user){
+          // setLikeAmount((prev) => prev ? [...prev, { userId: user?.uid, likeId: newDoc.id}] : [{ userId: user?.uid ,likeId: newDoc.id}]);
+          // }
+        
+        }
     
-    const likesDoc = query(likesRef, where("postId" , "==", post.id))
-
-    const getLikes = async () => {
-     const data = await getDocs(likesDoc)
-     setLikeAmount(data.docs.map((doc) =>({userId: doc.data().userId, likeId: doc.id})));
-     // retrieves all the docs that comply with the condition in likesDoc, and we then get the length of the docs that have that condition, and set state.
-    }
-
-    const hasUserLiked = likeAmount?.find((like) => like.userId === user?.uid);
+          catch (err) {
+            console.log(err)
+          }
+          };
+    
+  
 
 
 useEffect(() => {
@@ -80,8 +112,21 @@ useEffect(() => {
         <div className='title'> <h1>{post.title}</h1> </div>
         <div className='body'><p>{post.description}  </p></div>
         <div className='footer'><p>@{post.username}  </p></div>
+       
         <button onClick={hasUserLiked ? removeLike : addLike}> {hasUserLiked ? <>&#128078;</> : <>&#128077;</>} </button>
        { likeAmount && <p>likes:{likeAmount?.length}</p>}
+       
+      <div className='commentSection'>
+       <textarea className='comment-input' 
+       placeholder="Write your comment..."
+       onChange={inputComment}
+       >
+       </textarea>
+       <button onClick={addComment}>Submit Comment</button>
+       </div>
+      
+      
+        
     </div>
   )
 }
@@ -239,5 +284,12 @@ const addLike = async () => {
 
  3. change the logic in the firebase rules so user can delete
         	allow read,delete: if request.auth != null;
+
+*/
+
+/*
+HOW TO CREATE COMMENT
+
+make a collection called comments. field should have userID, postId, comment
 
 */
