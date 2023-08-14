@@ -13,9 +13,8 @@ function App() {
  
 
  const userInput = (event) => {
-
   setNewTask(event.target.value);
- }
+}
 
  const addTask = () =>{
 
@@ -24,8 +23,7 @@ function App() {
     id: todo.length === 0 ? 1 : todo[todo.length-1].id + 1,
     taskName: newTask,
     complete: false,
-    
-    
+
     }
 
   setTodo([...todo, task]);
@@ -38,9 +36,10 @@ function App() {
  }
 
  const completion = (id) => {
+
  setTodo(
   todo.map((task) => 
-    task.id === id ? {...task, complete:!task.complete, completeText:"complete" } : task
+    task.id === id ? {...task, complete:!task.complete,} : task
  
  
  )
