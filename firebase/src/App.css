@@ -68,6 +68,15 @@ a{
   width:120px;
   height: 20px;
 }
+
+.commentList{
+  border: solid black 2px;
+}
+
+.commentBox{
+  border: solid black 2px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
