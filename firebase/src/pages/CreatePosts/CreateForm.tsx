@@ -29,6 +29,9 @@ export default function CreateForm() {
         resolver: yupResolver(schema),
     });
 
+    const[user] = useAuthState(auth);
+    const postsRef = collection(db, "posts");   //references our db, and the name of the collection we want to add data to
+    
     const onCreatePost = async (data : CreateFormData) => {
 
         await addDoc(postsRef,{
@@ -41,8 +44,7 @@ export default function CreateForm() {
         navigate('/');
     };
     
-    const[user] = useAuthState(auth);
-    const postsRef = collection(db, "posts");   //references our db, and the name of the collection we want to add data to
+  
 
   return (
     <div className='formSection'>

@@ -20,24 +20,33 @@ interface Comment{
   comment: string | '';
 }
 
+interface Reply{
+  userId: string | '';
+  commentId: string;
+  
+}
+
 export default function Post(props: Props) {
 
     const {post} = props;
     const [user] = useAuthState(auth);
 
     const[likeAmount, setLikeAmount] = useState<Like[] | null >(null);
+
     const[commentText, setCommentText] = useState<string | null>("");
     const[commentList, setCommentList] = useState<Comment[]>([]);
+
+    const[replyList, setReplyList] = useState<Reply[]>([]);
+    const[replyText, setReplyText] = useState<string | null>("");
 
     const inputComment = (e : any) => {
       setCommentText(e.target.value)
 }
 
     const likesRef = collection(db, "likes");
-
     const addLike = async () => {
       try
-     { const newDoc=await addDoc(likesRef, {userId: user?.uid, postId: post.id})
+     { const newDoc=await addDoc(likesRef, {userId: user?.uid, postId: post.id,})
       // adds a doc to our collection in "likes"
 
       if(user){
@@ -124,6 +133,14 @@ export default function Post(props: Props) {
 
        
       }
+
+      const replysRef = collection(db, "replys");
+      const addReply = async () => {
+
+          await addDoc(replysRef, {userId: user?.uid, commentId: post.id })
+        
+
+      }
     
   
 
@@ -158,6 +175,9 @@ useEffect(() => {
 
            <p>posted by:{comment.displayName} : {comment.comment}</p>
            <textarea placeholder='reply'></textarea>
+           <button onClick={addReply}>submit reply</button>
+
+          
         </div>
   
         )}
