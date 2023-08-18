@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {Post as IPost} from "./Main";
-import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, documentId, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Comment from './Comment';
 
 interface Props{
     post: IPost;
@@ -13,18 +14,15 @@ interface Like {
   likeId: string;
 }
 
-interface Comment{
+export interface Comment{
   userId: string | '';
   displayName: string;
   postId: string;
   comment: string | '';
+  id?: string;
 }
 
-interface Reply{
-  userId: string | '';
-  commentId: string;
-  
-}
+
 
 export default function Post(props: Props) {
 
@@ -36,8 +34,7 @@ export default function Post(props: Props) {
     const[commentText, setCommentText] = useState<string | null>("");
     const[commentList, setCommentList] = useState<Comment[]>([]);
 
-    const[replyList, setReplyList] = useState<Reply[]>([]);
-    const[replyText, setReplyText] = useState<string | null>("");
+    
 
     const inputComment = (e : any) => {
       setCommentText(e.target.value)
@@ -46,7 +43,7 @@ export default function Post(props: Props) {
     const likesRef = collection(db, "likes");
     const addLike = async () => {
       try
-     { const newDoc=await addDoc(likesRef, {userId: user?.uid, postId: post.id,})
+     { const newDoc = await addDoc(likesRef, {userId: user?.uid, postId: post.id,})
       // adds a doc to our collection in "likes"
 
       if(user){
@@ -59,7 +56,6 @@ export default function Post(props: Props) {
       };
 
       const likesDoc = query(likesRef, where("postId" , "==", post.id))
-
       const getLikes = async () => {
        const data = await getDocs(likesDoc)
        setLikeAmount(data.docs.map((doc) =>({userId: doc.data().userId, likeId: doc.id})));
@@ -101,6 +97,7 @@ export default function Post(props: Props) {
               displayName: user.displayName || '',
               postId: post.id,
               comment: commentText || '',
+               
             };
       
             await addDoc(commentsRef, newCommentData);
@@ -129,43 +126,43 @@ export default function Post(props: Props) {
         userId: doc.data().userId,
         postId: doc.data().postId,
         displayName: doc.data().displayName,
-        comment: doc.data().comment})));
-
+        comment: doc.data().comment,
+        id: doc.id,
+      
+      })));
        
       }
 
-      const replysRef = collection(db, "replys");
-      const addReply = async () => {
-
-          await addDoc(replysRef, {userId: user?.uid, commentId: post.id })
-        
-
-      }
-    
-  
-
+      
 
 useEffect(() => {
   getLikes();
   getComments();
+  
 }, []);
 
   return (
     <div className='postBox'>
         <div className='title'> <h1>{post.title}</h1> </div>
         <div className='body'><p>{post.description}  </p></div>
-        <div className='footer'><p>@{post.username}  </p></div>
+        <div className='footer'><p>@{post.username} {post.id}  </p></div>
        
         <button onClick={hasUserLiked ? removeLike : addLike}> {hasUserLiked ? <>&#128078;</> : <>&#128077;</>} </button>
-       { likeAmount && <p>likes:{likeAmount?.length}</p>}
+       { likeAmount && <p>likes:{likeAmount?.length}</p> }
        
       <div className='commentSection'>
 
-       <textarea className='comment-input' 
+      <textarea className='comment-input' 
        placeholder="Write your comment..."
         onChange={inputComment}>
        </textarea>
        <button onClick={addComment}>Submit Comment</button>
+
+      {commentList?.map((comment) => 
+      
+      <Comment comments={comment}/> )}
+
+       {/* 
        
        <div className='commentList'>
 
@@ -173,16 +170,15 @@ useEffect(() => {
 
         <div className='commentBox'>
 
-           <p>posted by:{comment.displayName} : {comment.comment}</p>
+           <p>posted by:{comment.displayName}  <br /> : {comment.comment}  </p>
+           
            <textarea placeholder='reply'></textarea>
            <button onClick={addReply}>submit reply</button>
-
-          
         </div>
   
         )}
 
-       </div>
+       </div> */}
 
        </div>
       

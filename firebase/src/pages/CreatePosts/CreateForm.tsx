@@ -31,7 +31,7 @@ export default function CreateForm() {
 
     const[user] = useAuthState(auth);
     const postsRef = collection(db, "posts");   //references our db, and the name of the collection we want to add data to
-    
+
     const onCreatePost = async (data : CreateFormData) => {
 
         await addDoc(postsRef,{
@@ -39,6 +39,7 @@ export default function CreateForm() {
             description: data.description, 
             username: user?.displayName,
             userId: user?.uid,
+           
         })
 
         navigate('/');
