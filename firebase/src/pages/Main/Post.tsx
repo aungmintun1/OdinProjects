@@ -123,13 +123,9 @@ export default function Post(props: Props) {
        const data = await getDocs(commentsDoc)
 
        setCommentList(data.docs.map((doc) =>({
-        userId: doc.data().userId,
-        postId: doc.data().postId,
-        displayName: doc.data().displayName,
-        comment: doc.data().comment,
+        ...doc.data(),
         id: doc.id,
-      
-      })));
+      })) as Comment[]);
        
       }
 

@@ -3,16 +3,19 @@ import { addDoc, collection, deleteDoc, doc, documentId, getDocs, query, where }
 import { auth, db } from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {Comment as IComment} from "./Post";
+import Reply from './Reply';
 
 
 interface Props{
     comments: IComment;
 }
 
-interface Reply{
+export interface Reply{
   userId: string | '';
-  commentId: string;
+  displayName: string;
+  commentId: string | undefined;
   text: string | '';
+  id?: string;
   
 }
 
@@ -30,12 +33,27 @@ export default function Comment(props: Props) {
     const replysRef = collection(db, "replys");
       const addReply = async () => {
           try
-     { const newDoc = await addDoc(replysRef, {userId: user?.uid, commentId: comments.id, text: replyText || '',})
-      
-
+     { 
       if(user){
-      setReplyList((prev) => prev ? [...prev, { userId: user?.uid, commentId: newDoc.id ,text: replyText || ''}] : [{ userId: user?.uid ,commentId: newDoc.id ,text: replyText || ''}]);
-      }}
+        //const newDoc = await addDoc(replysRef, {userId: user?.uid, commentId: comments.id, text: replyText || '',})
+      
+        const newDoc = {
+          userId: user.uid,
+          displayName: user.displayName || '',
+          commentId: comments.id,
+          text: replyText || '',
+
+        };
+
+        await addDoc(replysRef, newDoc);
+        setReplyList(prev => prev ? [...prev, newDoc] : [newDoc])
+
+
+      }
+      // setReplyList((prev) => prev ? [...prev, { userId: user?.uid, commentId: newDoc.id ,text: replyText || ''}] : [{ userId: user?.uid ,commentId: newDoc.id ,text: replyText || ''}]);
+    
+    
+    }
 
       catch (err) {
         console.log(err)
@@ -49,7 +67,7 @@ export default function Comment(props: Props) {
 
       const getReplys = async () => {
         const data = await getDocs(replysDoc);
-        setReplyList(data.docs.map((doc) => ({ ...doc.data(), commentId: doc.id })) as Reply[] );
+        setReplyList(data.docs.map((doc) => ({ ...doc.data()})) as Reply[] );
       }
 
       useEffect(() => {
@@ -62,7 +80,7 @@ export default function Comment(props: Props) {
 
 <div className='commentList'>
 
-   <p>posted by:{comments.displayName}  <br /> : {comments.comment}  </p>
+   <p>COMMENTED BY:{comments.displayName}  <br /> : {comments.comment}  </p>
 
    <textarea placeholder='reply' onChange={inputReply}></textarea>
    <button onClick={addReply}>submit reply</button>
@@ -71,9 +89,8 @@ export default function Comment(props: Props) {
 
    {replyList?.map((reply) => 
       
-      <div>
-        <p>{reply.text}</p>
-      </div> )}
+      <Reply reply={reply}/> )}
+
 
    </div>
 
@@ -151,4 +168,22 @@ and then we're going to add that object to our replyList
           collection "replyComments"
           and it will reference the replyId
 
+*/
+
+/* 
+Notes on using props and importing 
+
+1.we put the props as a parameter in our function component. we also make an object in order to access that prop as an object.
+
+export default function Comment(props: Props) {
+    const {comments} = props;
+
+2. we export the interface from another component, in this case main.tsx . and then we import it in our 
+   component. 
+
+   import {Comment as IComment} from "./Post";
+
+    interface Props{
+    comments: IComment;
+}
 */

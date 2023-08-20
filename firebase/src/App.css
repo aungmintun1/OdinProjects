@@ -71,12 +71,18 @@ a{
 
 .commentList{
   border: solid black 2px;
+  width: 500px;
 }
 
 .commentBox{
   border: solid black 2px;
+  
 }
+.replyBox{
+  border: solid blue 2px;
 
+
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
