@@ -41,6 +41,7 @@ export default function Post(props: Props) {
 }
 
     const likesRef = collection(db, "likes");
+
     const addLike = async () => {
       try
      { const newDoc = await addDoc(likesRef, {userId: user?.uid, postId: post.id,})
@@ -91,27 +92,22 @@ export default function Post(props: Props) {
         const addComment = async () => {
           try
          { 
-          if (user) {
-            const newCommentData = {
-              userId: user.uid,
-              displayName: user.displayName || '',
+          const newCommentData = await addDoc(commentsRef, 
+            {userId: user?.uid,
+            displayName: user?.displayName || '',
+            postId: post.id,
+            comment: commentText || '',
+          
+          })
+        
+            if(user)
+            setCommentList((prevComments) => prevComments ?
+               [...prevComments,{userId: user?.uid, displayName: user?.displayName || '',postId: post.id, comment: commentText || '', id: newCommentData.id, }] :
+             [{userId: user?.uid,
+              displayName:user?.displayName || '',
               postId: post.id,
               comment: commentText || '',
-               
-            };
-      
-            await addDoc(commentsRef, newCommentData);
-      
-            setCommentList(prevComments => prevComments ? [...prevComments, newCommentData] : [newCommentData]);
-
-            /*I had a typescript error. looks like I can't have the array as null, and i had the modify the comment string in my interface
-              a string or an empty string if it is null.
-              I also had to add that in the newCommentData object as well.
-
-              now when i activate the addComment(); it also sets the commentList array to the prev elements and adds the newCommentData object in it.
-
-            */
-          }
+              id: newCommentData.id,}]);      
 
         } catch (err) {
           console.log(err);
@@ -122,10 +118,7 @@ export default function Post(props: Props) {
       const getComments = async () => {
        const data = await getDocs(commentsDoc)
 
-       setCommentList(data.docs.map((doc) =>({
-        ...doc.data(),
-        id: doc.id,
-      })) as Comment[]);
+       setCommentList(data.docs.map((doc) =>({...doc.data(),id: doc.id,})) as Comment[]);
        
       }
 
@@ -156,13 +149,13 @@ useEffect(() => {
 
       {commentList?.map((comment) => 
       
-      <Comment comments={comment}/> )}
+      <Comment comments={comment} post={post} /> )}
 
        {/* 
        
        <div className='commentList'>
 
-        {commentList?.map((comment) => 
+        {commentList?.map((comment) =>  
 
         <div className='commentBox'>
 
@@ -421,3 +414,11 @@ b.make 2 states. one is an array of the string comments, and one is for setting 
   
         )}
 */
+
+  /*I had a typescript error. looks like I can't have the array as null, and i had the modify the comment string in my interface
+              a string or an empty string if it is null.
+              I also had to add that in the newCommentData object as well.
+
+              now when i activate the addComment(); it also sets the commentList array to the prev elements and adds the newCommentData object in it.
+
+            */

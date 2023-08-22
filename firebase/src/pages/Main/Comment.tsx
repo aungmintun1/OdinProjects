@@ -4,25 +4,27 @@ import { auth, db } from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {Comment as IComment} from "./Post";
 import Reply from './Reply';
-
+import {Post as IPost} from "./Main";
 
 interface Props{
     comments: IComment;
+    post: IPost;
 }
 
 export interface Reply{
   userId: string | '';
   displayName: string;
-  commentId: string | undefined;
-  text: string | '';
-  id?: string;
+  commentId?: string | undefined;
+  postId?: string;
+  text?: string | '';
+  id?: string | '';
   
 }
 
 export default function Comment(props: Props) {
     const {comments} = props;
     const [user] = useAuthState(auth);
-    const[replyList, setReplyList] = useState<Reply[]>([]);
+    const[replyList, setReplyList] = useState<IComment[]>([]);
     const[replyText, setReplyText] = useState<string | null>("");
 
     const inputReply = (e : any) => {
@@ -34,25 +36,29 @@ export default function Comment(props: Props) {
       const addReply = async () => {
           try
      { 
-      if(user){
-        //const newDoc = await addDoc(replysRef, {userId: user?.uid, commentId: comments.id, text: replyText || '',})
       
-        const newDoc = {
-          userId: user.uid,
-          displayName: user.displayName || '',
+        const newDoc = await addDoc(replysRef, {
+          userId: user?.uid,
+          displayName: user?.displayName || '',
+          postId: props.post.id,
+          comment: replyText || '',
           commentId: comments.id,
-          text: replyText || '',
+          
+        }) 
 
-        };
+       
+      
 
-        await addDoc(replysRef, newDoc);
-        setReplyList(prev => prev ? [...prev, newDoc] : [newDoc])
+        if(user)
+            setReplyList((prevComments) => prevComments ?
+               [...prevComments,{userId: user?.uid, displayName: user?.displayName || '',postId: props.post.id, comment: replyText || '', id: newDoc.id, }] :
+             [{userId: user?.uid,
+              displayName:user?.displayName || '',
+              postId: props.post.id,
+              comment: replyText || '',
+              id: newDoc.id,}]);    
+      
 
-
-      }
-      // setReplyList((prev) => prev ? [...prev, { userId: user?.uid, commentId: newDoc.id ,text: replyText || ''}] : [{ userId: user?.uid ,commentId: newDoc.id ,text: replyText || ''}]);
-    
-    
     }
 
       catch (err) {
@@ -61,26 +67,28 @@ export default function Comment(props: Props) {
         
       }
 
-      const replysDoc = query(replysRef, where("commentId" , "==", comments.id)) 
-      /* this allows us to get the documents in our replys collection that ONLY have the commentId equal to the firebase id of the comment that was replied to.
-          It basically grabs all the reply docs that are related to the comment that was replied to. note that you have to put it in getDocs();  */
-
+     
+      const replysDoc = query(replysRef, where("commentId" , "==", props.comments.id)) 
       const getReplys = async () => {
+       
         const data = await getDocs(replysDoc);
-        setReplyList(data.docs.map((doc) => ({ ...doc.data()})) as Reply[] );
+        setReplyList(data.docs.map((doc) => ({ ...doc.data() ,id: doc.id,})) as IComment[] );
       }
+
+
 
       useEffect(() => {
         getReplys();
+        
       }, []);
-
+      
 
   return (
     <div>
 
 <div className='commentList'>
 
-   <p>COMMENTED BY:{comments.displayName}  <br /> : {comments.comment}  </p>
+   <p>COMMENTED BY:{comments.displayName}  <br /> comment text: {comments.comment}  id: {comments.id} </p>
 
    <textarea placeholder='reply' onChange={inputReply}></textarea>
    <button onClick={addReply}>submit reply</button>
@@ -88,9 +96,10 @@ export default function Comment(props: Props) {
    <div className='replyList'>
 
    {replyList?.map((reply) => 
-      
-      <Reply reply={reply}/> )}
-
+      <div className='replyBox'>
+      <Comment comments={reply} post={props.post} />
+      </div>
+    )}
 
    </div>
 
