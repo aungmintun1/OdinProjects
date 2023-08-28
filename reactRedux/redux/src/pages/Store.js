@@ -41,7 +41,7 @@ const numSlice = createSlice({
 })
 
 export const { login, logout } = userSlice.actions;
-export const { add, subtract, zero} = numSlice.actions;             //export the functions from the slice
+export const { add, subtract, zero} = numSlice.actions;             //export the functions from the slice. which change the value of our state.
 
 export const Store = configureStore({                               // export the store and add the slices to the reducers
     reducer: {

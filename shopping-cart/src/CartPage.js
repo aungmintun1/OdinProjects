@@ -1,11 +1,15 @@
 import React from 'react'
 import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CartPage() {
+
+    const dispatch = useDispatch();
+
     const [cart, setCart] = useState([]);
     const [total, setTotal] = useState(0);
-    const [totalItems, setTotalItems] = useState(0);
-   
+    
+
   
     const tShirt = { price: 20, name: "t-shirt"}
     const tank = {price: 30, name: "tank"}
@@ -36,6 +40,7 @@ export default function CartPage() {
         // If the item is not in the cart, add it with a quantity of 1
         setCart([...cart, { ...item, quantity: 1 }]);
       }
+      
       setTotal(total + item.price)
       
 
