@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"; 
 
-const initialNum = {value: 0};
+const initialNum = {value: 5};
 const initialUser = {value: {username: ""} };
 
 
@@ -34,7 +34,7 @@ const numSlice = createSlice({
             state.value-= 1;
         },
         zero: (state)=> {
-            state.value = initialNum.value;
+            state.value = 0;
         }
         
     }

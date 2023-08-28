@@ -8,25 +8,25 @@ export default function Counter() {
     const dispatch = useDispatch();
     const myNum = useSelector((state) => state.counter.value);
 
-    const addition = (num) =>{
-      dispatch(add(num))
+    const addition = () =>{
+      dispatch(add())
     }
 
-    const subtraction = (num) =>{
-      dispatch(subtract(num))
+    const subtraction = () =>{
+      dispatch(subtract())
     }
 
-    const setZero = (num) => {
-      dispatch(zero(num))
+    const setZero = () => {
+      dispatch(zero())
     }
     
   return (
     <div>
         <h1>this is the Counter Page</h1>
         <h2>number: {myNum} </h2>
-        <button onClick={()=> addition(myNum)}>+1</button>
-        <button onClick={()=> subtraction(myNum)}>-1</button>
-        <button onClick={()=> setZero(myNum)}>set to zero</button>
+        <button onClick={()=> addition()}>+1</button>
+        <button onClick={()=> subtraction()}>-1</button>
+        <button onClick={()=> setZero()}>set to zero</button>
 
     </div>
   )
