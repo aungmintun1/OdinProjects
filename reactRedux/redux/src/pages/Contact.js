@@ -9,7 +9,7 @@ export default function Contact() {
     const[newUsername, setNewUsername] = useState("");
 
     const dispatch = useDispatch();     // dispatch hook used to grab functions from store.js
-    const username = useSelector((state) => state.user.value.username); // unique variable that is equal to the state value from the slice in store.js.
+    const username = useSelector((state) => state.user.username); // unique variable that is equal to the state value from the slice in store.js.
 
   return (
 
@@ -17,8 +17,9 @@ export default function Contact() {
     <h1>This is the login page</h1>
     <h1>{username}</h1>
     <input onChange={(e) => {setNewUsername(e.target.value)}}/>
-    <button onClick= {() => dispatch(login({username: newUsername})) }>login</button>
+    <button onClick= {() => dispatch(login(newUsername)) }>login</button>
     <button onClick= {() => dispatch(logout())}>logout</button>
+  
 
     </>
   )

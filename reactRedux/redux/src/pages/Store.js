@@ -1,8 +1,10 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"; 
 
-const initialNum = {value: 5};
-const initialUser = {value: {username: ""} };
-
+const initialNum = {value: 5};                                  
+const initialUser = {username: ""};
+// const initialUser = {value: {username: ""}};
+// create the value of the intitial State. 
+//note that you can create more than one state variables in one slice
 
 const userSlice = createSlice({
 
@@ -10,11 +12,11 @@ const userSlice = createSlice({
     initialState: initialUser,           // this is the initial value for our state which is an empty string ""
     reducers: {                          // these reducers are going to change the value of our state
         login: (state, action) => {
-            state.value = action.payload;
+            state.username = action.payload;
         },
 
         logout: (state) => {
-            state.value = initialUser.value;
+            state.username = initialUser.value;
         },
 
     },
