@@ -32,3 +32,26 @@ function App() {
 }
 
 export default App;
+
+/*
+1. go to terminal npm install react-router-dom@6
+
+2.import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+
+3.Next we write the Router, Routes and Route component lines.
+
+After that in our path we write the name of the page, in our element we write what content is displayed in that page.
+ You can put components, html, etc in the element. we put our error page as the last route, 
+ and for our path we leave a *, to indicate a mispelling of a page.
+note that you can create a seperate folder in src, called “Pages” or whatever you want. In order to store all your pages/components.
+
+
+
+
+
+
+
+
+
+
+*/

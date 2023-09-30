@@ -1,7 +1,7 @@
 .slider {
   position: relative;
-  width: 600px;
-  height: 400px;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -19,14 +19,26 @@
   color: white;
   border: none;
   cursor: pointer;
+
+  width:60px;
+  height: 60px;
+  font-size: 50px;
+  border-radius: 10px;
+
+  transition: 0.6s ease;
+}
+
+.slider-button:hover{
+  background-color: aliceblue;
+  color: black;
 }
 
 .slider-button.left {
-  left: 0;
+  left: 30px;
 }
 
 .slider-button.right {
-  right: 0;
+  right: 30px;
 }
 
 .sliderSection{
@@ -34,4 +46,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.btnContainer{
+  background-color: rgba(0, 0, 0, 0.8); 
+  width:200px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+
+  position: absolute;
+  bottom: 0;
+  left:50%;
+  transform: translateX(-50%);
+
+}
+
+.circle{
+  background-color: transparent;
+  border: none;
+  font-size: 3rem;
+  color:white;
+}
+
+.blue{
+  background-color: transparent;
+  border: none;
+  font-size: 3rem;
+  color:blue;
 }

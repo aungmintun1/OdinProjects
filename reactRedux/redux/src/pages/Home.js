@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector} from "react-redux";
 export default function Home() {
 
-  const username = useSelector((state) => state.user.value.username);
+  const username = useSelector((state) => state.user.username);
   const myNum = useSelector((state) => state.counter.value);
 
   return (
