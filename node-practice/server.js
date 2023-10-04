@@ -9,12 +9,12 @@ const PORT = 3000;
 
 // Define a route for the root path ("/"). When a GET request is made to the root path, 
 // the server will respond with "Hello, World!".
-// app.get('/', (req, res) => {
-//     res.send('Hello, World!');
-// });
+app.get('/', (req, res) => {
+    res.send('<h1>Hello, World!</h1>');
+  });
 
 // Serve static files from the 'public' directory
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // Start the server on the defined port. Once the server starts running, 
 // a log will be printed to the console indicating the address of the server.
