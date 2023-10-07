@@ -9,7 +9,7 @@ function App() {
 
  const [todo, setTodo] = useState([]);
  const [newTask, setNewTask] = useState("");
-//  const [complete, setComplete] = useState(false);
+
  
 
  const userInput = (event) => {
@@ -40,17 +40,18 @@ function App() {
  setTodo(
   todo.map((task) => 
     task.id === id ? {...task, complete:!task.complete,} : task
- 
- 
  )
  )
+
  }
+
+
  
   return (
     <div className="App">
 
       <TaskInput userInput={userInput} newTask={newTask} addTask={addTask} todo={todo}/>
-      <List todo={todo} deleteTask={deleteTask} completion={completion} /> 
+      <List todo={todo} setTodo={setTodo} deleteTask={deleteTask} completion={completion}/> 
     </div>
   );
 }
