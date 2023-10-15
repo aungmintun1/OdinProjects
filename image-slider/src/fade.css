@@ -20,16 +20,20 @@ border-radius: 30px;
 }
 
 .fade{
-    animation: fadeIn 1.6s ease-in-out forwards;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
     
     from{
         opacity: 0;
+        filter: blur(5px);
+        transform: translateX(-100%);
     }
 
     to{
         opacity: 1;
+        filter: blur(0);
+        transform: translateX(0);
     }
 }
