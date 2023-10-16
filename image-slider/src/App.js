@@ -1,4 +1,4 @@
-import './App.css';
+import './fade.css'
 import ImageSlider from './ImageSlider';
 import Scroll from './Scroll';
 
@@ -11,7 +11,7 @@ function App() {
 const imgArray =[image1,image2,image3,image1,image2,image3]
   
   return (
-    <div className="App">
+    <div className="box">
 
       {/* <ImageSlider /> */}
 

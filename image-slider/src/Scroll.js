@@ -35,7 +35,7 @@ export default function Scroll(props) {
   return (
     <>
 
-<div className="container">
+<div className="box">
 
 
     <img ref={img} className={`card ${view ? "fade" : ""}`} src={props.pic} alt="" />
