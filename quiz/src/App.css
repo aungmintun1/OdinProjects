@@ -1,0 +1,57 @@
+*,
+ *::before, 
+*::after {
+  box-sizing: border-box;
+}
+
+*{
+margin: 0;
+padding: 0;
+line-height: calc(1em+0.5rem)
+}
+
+img{
+max-width: 100%;
+display:block;
+}
+
+ul {
+margin: 0;
+padding: 0;
+list-style: none;
+}
+
+html{
+	scroll-behavior:smooth;
+}
+
+body{
+font-family: 'Inter' , sans-serif;
+}
+
+input, button, textarea, select{
+font: inherit;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap:2.5rem;
+}
+
+.answerBtn{
+  padding: 1rem;
+}
+
+.red{
+  color: aliceblue;
+  background-color: red;
+}
+
+.green{
+  color: aliceblue;
+  background-color: green;
+}
